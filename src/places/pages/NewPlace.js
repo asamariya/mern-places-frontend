@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './NewPlace.scss';
 import Input from '../../shared/components/FormElements/Input';
-
+import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
+import './NewPlace.scss';
 const NewPlace = () => {
   return (
     <form className="place-form">
@@ -10,7 +10,7 @@ const NewPlace = () => {
         type="text"
         label="Title"
         element="input"
-        validators={[]}
+        validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
       />
     </form>
