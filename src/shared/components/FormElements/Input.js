@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import { validate } from '../../util/validators';
 import './Input.scss';
@@ -35,9 +35,15 @@ const Input = ({
   rows,
   label,
   errorText,
-  validators
+  validators,
+  onInput
 }) => {
   const [inputState, dispatch] = useReducer(inputReducer, initialState);
+  const { value, isValid } = inputState;
+
+  useEffect(() => {
+    onInput(id, value, isValid);
+  }, [id, value, isValid, onInput]);
 
   const changeHandler = e => {
     dispatch({ type: 'CHANGE', val: e.target.value, validators: validators });
