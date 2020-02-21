@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -39,25 +39,43 @@ const DUMMY_PLACES = [
 ];
 
 const UpdatePlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { placeId } = useParams();
-
-  const placeToUpdate = DUMMY_PLACES.find(place => place.id === placeId);
 
   const initialState = {
     inputs: {
       title: {
-        value: placeToUpdate.title,
-        isValid: true
+        value: '',
+        isValid: false
       },
       description: {
-        value: placeToUpdate.description,
-        isValid: true
+        value: '',
+        isValid: false
       }
     },
-    isValid: true
+    isValid: false
   };
 
-  const [formState, inputHandler] = useForm(initialState);
+  const [formState, inputHandler, setFormData] = useForm(initialState);
+
+  const placeToUpdate = DUMMY_PLACES.find(place => place.id === placeId);
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: placeToUpdate.title,
+          isValid: true
+        },
+        description: {
+          value: placeToUpdate.description,
+          isValid: true
+        }
+      },
+      true
+    );
+    setIsLoading(false);
+  }, [setFormData, placeToUpdate]);
 
   const placeUpdateSubmitHandler = e => {
     e.preventDefault();
@@ -73,6 +91,14 @@ const UpdatePlace = () => {
             😟
           </span>
         </h2>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
       </div>
     );
   }
