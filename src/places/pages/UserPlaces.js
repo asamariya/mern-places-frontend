@@ -18,7 +18,7 @@ const DUMMY_PLACES = [
   },
   {
     id: 'p2',
-    title: 'Empire State Building',
+    title: 'Emp. State Bldg',
     description: 'One of the tallest buildings in the world!',
     imageUrl:
       'https://images.unsplash.com/photo-1502104034360-73176bb1e92e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',

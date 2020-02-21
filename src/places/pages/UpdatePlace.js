@@ -8,6 +8,7 @@ import {
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import './PlaceForm.scss';
+import Card from '../../shared/components/UIElements/Card';
 
 const DUMMY_PLACES = [
   {
@@ -25,7 +26,7 @@ const DUMMY_PLACES = [
   },
   {
     id: 'p2',
-    title: 'Empire State Building',
+    title: 'Emp. State Bldg',
     description: 'One of the tallest buildings in the world!',
     imageUrl:
       'https://images.unsplash.com/photo-1502104034360-73176bb1e92e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
@@ -61,19 +62,20 @@ const UpdatePlace = () => {
   const placeToUpdate = DUMMY_PLACES.find(place => place.id === placeId);
 
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: placeToUpdate.title,
-          isValid: true
+    placeToUpdate &&
+      setFormData(
+        {
+          title: {
+            value: placeToUpdate.title,
+            isValid: true
+          },
+          description: {
+            value: placeToUpdate.description,
+            isValid: true
+          }
         },
-        description: {
-          value: placeToUpdate.description,
-          isValid: true
-        }
-      },
-      true
-    );
+        true
+      );
     setIsLoading(false);
   }, [setFormData, placeToUpdate]);
 
@@ -85,12 +87,14 @@ const UpdatePlace = () => {
   if (!placeToUpdate) {
     return (
       <div className="center">
-        <h2>
-          Could not find place{' '}
-          <span role="img" aria-labelledby="Sad Face">
-            😟
-          </span>
-        </h2>
+        <Card>
+          <h2>
+            Could not find place{' '}
+            <span role="img" aria-labelledby="Sad Face">
+              😟
+            </span>
+          </h2>
+        </Card>
       </div>
     );
   }
