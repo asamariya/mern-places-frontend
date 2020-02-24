@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import '../../places/pages/PlaceForm.scss';
 import Input from '../../shared/components/FormElements/Input';
@@ -12,6 +12,7 @@ import Button from '../../shared/components/FormElements/Button';
 
 import './Auth.scss';
 import Card from '../../shared/components/UIElements/Card';
+import { AuthContext } from '../../shared/context/auth-context';
 
 const initialState = {
   inputs: {
@@ -28,12 +29,14 @@ const initialState = {
 };
 
 const Auth = () => {
+  const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = useForm(initialState);
 
   const signInHandler = e => {
     e.preventDefault();
     console.log(formState.inputs);
+    auth.login();
   };
 
   const switchToRegisterHandler = () => {
