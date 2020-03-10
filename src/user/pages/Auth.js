@@ -9,10 +9,11 @@ import {
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import Button from '../../shared/components/FormElements/Button';
-
-import './Auth.scss';
 import Card from '../../shared/components/UIElements/Card';
 import { AuthContext } from '../../shared/context/auth-context';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+
+import './Auth.scss';
 
 const initialState = {
   inputs: {
@@ -32,6 +33,8 @@ const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = useForm(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const signInHandler = async e => {
     e.preventDefault();
@@ -39,6 +42,8 @@ const Auth = () => {
     if (isLoginMode) {
     } else {
       try {
+        setIsLoading(true);
+
         const response = await fetch('http://localhost:5000/api/users/signup', {
           method: 'POST',
           headers: {
@@ -53,11 +58,14 @@ const Auth = () => {
 
         const responseData = await response.json();
         console.log(responseData);
+        setIsLoading(false);
+        auth.login();
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
+        setError(err.message || 'Something went wrong, please try again.');
       }
     }
-    auth.login();
   };
 
   const switchToRegisterHandler = () => {
@@ -85,6 +93,7 @@ const Auth = () => {
   };
   return (
     <Card className="authentication">
+      {isLoading && <LoadingSpinner asOverlay />}
       <h2>{isLoginMode ? 'Sign In' : 'Register'}</h2>
       <hr />
       <form onSubmit={signInHandler}>
