@@ -54,6 +54,7 @@ const Auth = () => {
           })
         });
 
+        // If the backend response returns with a 4-- or 5-- error code, we want to throw an error and go to the catch error instead of continuing with the try
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
