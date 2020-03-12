@@ -6,9 +6,9 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 const Users = () => {
+  const [loadedUsers, setLoadedUsers] = useState();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [loadedUsers, setLoadedUsers] = useState();
 
   useEffect(() => {
     const sendRequest = async () => {
@@ -37,7 +37,7 @@ const Users = () => {
       <ErrorModal error={error} onClear={errorHandler} />
       {isLoading && (
         <div className="center">
-          <LoadingSpinner />{' '}
+          <LoadingSpinner />
         </div>
       )}
       {!isLoading && loadedUsers && <UsersList items={loadedUsers} />}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useHttpClient = () => {
   const [error, setError] = useState();
@@ -23,16 +23,22 @@ export const useHttpClient = () => {
         });
 
         const responseData = await response.json();
+        activeHttpRequests.current = activeHttpRequests.current.filter(
+          reqCtrl => reqCtrl !== httpAbortCtrl
+        );
 
+        // If the backend response returns with a 4-- or 5-- error code, we want to throw an error and go to the catch error instead of continuing with the try
         if (!response.ok) {
           throw new Error(responseData.message);
         }
 
+        setIsLoading(false);
         return responseData;
       } catch (err) {
         setError(err.message);
+        setIsLoading(false);
+        throw err;
       }
-      setIsLoading(false);
     },
     []
   );
