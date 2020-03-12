@@ -22,7 +22,7 @@ const PlaceList = ({ items }) => {
       {items.map(place => {
         const {
           id,
-          imageUrl,
+          image,
           title,
           description,
           address,
@@ -34,7 +34,7 @@ const PlaceList = ({ items }) => {
           <PlaceItem
             key={id}
             id={id}
-            image={imageUrl}
+            image={image}
             title={title}
             description={description}
             address={address}
