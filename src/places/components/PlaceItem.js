@@ -96,8 +96,10 @@ const PlaceItem = ({
             <Button inverse onClick={openMap}>
               View on map
             </Button>
-            {auth.isLoggedIn && <Button to={`/places/${id}`}>Edit</Button>}
-            {auth.isLoggedIn && (
+            {auth.userId === creatorId && (
+              <Button to={`/places/${id}`}>Edit</Button>
+            )}
+            {auth.userId === creatorId && (
               <Button danger onClick={showDeleteWarning}>
                 Delete
               </Button>
