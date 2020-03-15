@@ -41,7 +41,7 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async e => {
     e.preventDefault();
-    console.log(formState.inputs);
+    // console.log(formState.inputs);
     const { title, description, address } = formState.inputs;
     try {
       await sendRequest(
