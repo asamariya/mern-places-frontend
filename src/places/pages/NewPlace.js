@@ -53,7 +53,6 @@ const NewPlace = () => {
       formData.append('title', title.value);
       formData.append('description', description.value);
       formData.append('address', address.value);
-      formData.append('creator', auth.userId);
       formData.append('image', image.value);
       await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
         Authorization: `Bearer ${auth.token}`,
