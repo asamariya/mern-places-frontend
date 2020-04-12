@@ -18,7 +18,7 @@ const PlaceItem = ({
   address,
   creatorId,
   coordinates,
-  onDelete
+  onDelete,
 }) => {
   const auth = useContext(AuthContext);
   const { sendRequest, error, clearError, isLoading } = useHttpClient();
@@ -33,7 +33,14 @@ const PlaceItem = ({
 
   const deletePlace = async () => {
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE');
+      await sendRequest(
+        `http://localhost:5000/api/places/${id}`,
+        'DELETE',
+        null,
+        {
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
       onDelete(id);
     } catch (err) {}
   };

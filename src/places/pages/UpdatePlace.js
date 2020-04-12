@@ -4,7 +4,7 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
+  VALIDATOR_MINLENGTH,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import './PlaceForm.scss';
@@ -25,14 +25,14 @@ const UpdatePlace = () => {
     inputs: {
       title: {
         value: '',
-        isValid: false
+        isValid: false,
       },
       description: {
         value: '',
-        isValid: false
-      }
+        isValid: false,
+      },
     },
-    isValid: false
+    isValid: false,
   };
 
   const [formState, inputHandler, setFormData] = useForm(initialState);
@@ -48,12 +48,12 @@ const UpdatePlace = () => {
           {
             title: {
               value: loadedPlace.title,
-              isValid: true
+              isValid: true,
             },
             description: {
               value: loadedPlace.description,
-              isValid: true
-            }
+              isValid: true,
+            },
           },
           true
         );
@@ -62,7 +62,7 @@ const UpdatePlace = () => {
     fetchPlace();
   }, [sendRequest, placeId, setFormData]);
 
-  const placeUpdateSubmitHandler = async e => {
+  const placeUpdateSubmitHandler = async (e) => {
     e.preventDefault();
     // console.log(formState.inputs);
     try {
@@ -71,10 +71,11 @@ const UpdatePlace = () => {
         'PATCH',
         JSON.stringify({
           title: formState.inputs.title.value,
-          description: formState.inputs.description.value
+          description: formState.inputs.description.value,
         }),
         {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.token}`,
         }
       );
       history.push('/' + auth.userId + '/places');

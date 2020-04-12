@@ -4,7 +4,7 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
+  VALIDATOR_MINLENGTH,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import './PlaceForm.scss';
@@ -19,22 +19,22 @@ const initialState = {
   inputs: {
     title: {
       value: '',
-      isValid: false
+      isValid: false,
     },
     description: {
       value: '',
-      isValid: false
+      isValid: false,
     },
     address: {
       value: '',
-      isValid: false
+      isValid: false,
     },
     image: {
       value: null,
-      isValid: false
-    }
+      isValid: false,
+    },
   },
-  isValid: false
+  isValid: false,
 };
 
 const NewPlace = () => {
@@ -44,7 +44,7 @@ const NewPlace = () => {
 
   const auth = useContext(AuthContext);
 
-  const placeSubmitHandler = async e => {
+  const placeSubmitHandler = async (e) => {
     e.preventDefault();
     // console.log(formState.inputs);
     try {
@@ -55,7 +55,9 @@ const NewPlace = () => {
       formData.append('address', address.value);
       formData.append('creator', auth.userId);
       formData.append('image', image.value);
-      await sendRequest('http://localhost:5000/api/places', 'POST', formData);
+      await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
+        Authorization: `Bearer ${auth.token}`,
+      });
       history.push('/');
     } catch (err) {}
   };
